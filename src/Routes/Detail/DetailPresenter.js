@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import Helmet from "react-helmet";
+import { Link } from "react-router-dom";
+
 import Loader from "Components/Loader";
+import Message from "Components/Message";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -43,6 +47,18 @@ const ItemContainer = styled.div`
 
 const Item = styled.span``;
 
+const Button = styled.input`
+  all: unset;
+  background-color: #f9ca24;
+  color: #020202;
+  padding: 2px;
+  border-radius: 2px;
+  border: 1px solid black;
+  width: 30px;
+`;
+
+const Ilink = styled(Link)``;
+
 const Divider = styled.span`
   margin: 0 10px;
 `;
@@ -70,9 +86,22 @@ const Backdrop = styled.div`
 
 const DetailPresenter = ({ result, error, loading }) =>
   loading ? (
-    <Loader />
+    <>
+      <Helmet>
+        <title>Loading | Nomflix</title>
+      </Helmet>
+      <Loader />
+    </>
+  ) : error ? (
+    <Message />
   ) : (
     <Container>
+      <Helmet>
+        <title>
+          {result.original_title ? result.original_title : result.original_name}
+          | Nomflix
+        </title>
+      </Helmet>
       <Backdrop
         bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
       />
@@ -108,6 +137,16 @@ const DetailPresenter = ({ result, error, loading }) =>
                     ? genre.name
                     : `${genre.name} /`
                 )}
+            </Item>
+            <Divider>∙</Divider>
+            <Item>
+              <a
+                href={`https://www.imdb.com/title/${result.imdb_id}/`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button value="IMDB" />
+              </a>
             </Item>
           </ItemContainer>
           <Overview>{result.overview}</Overview>

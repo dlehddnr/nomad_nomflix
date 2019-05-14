@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import Helmet from "react-helmet";
+
 import Loader from "../../Components/Loader";
 import Section from "../../Components/Section";
 import Message from "../../Components/Message";
@@ -30,6 +32,9 @@ const SearchPresenter = ({
   updateTerm
 }) => (
   <Container>
+    <Helmet>
+      <title>Search | Nomflix</title>
+    </Helmet>
     <Form onSubmit={handleSubmit}>
       <Input
         placeholder="Search Movies or TV Shows..."
