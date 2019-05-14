@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import Loader from "Components/Loader";
 import Message from "Components/Message";
@@ -57,8 +57,6 @@ const Button = styled.input`
   width: 30px;
 `;
 
-const Ilink = styled(Link)``;
-
 const Divider = styled.span`
   margin: 0 10px;
 `;
@@ -84,7 +82,48 @@ const Backdrop = styled.div`
   z-index: 0;
 `;
 
-const DetailPresenter = ({ result, error, loading }) =>
+const Tab = styled.button`
+  all: unset;
+  cursor: pointer;
+`;
+
+const TabContainer = styled.div`
+  background-color: #020202;
+  width: 50%;
+  height: 300px;
+  color: white;
+  margin-top: 20px;
+  box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.8);
+  padding: 20px;
+`;
+
+const List = styled.ul`
+  display: flex;
+`;
+
+const ListItem = styled.li`
+  font-size:14px;
+  width: 100px;
+  height: 25px;
+  text-align: center;
+  border-bottom: 4px solid #e74c3c;
+  &:not(:last-child){
+    margin-right:30px;
+  }
+    /* ${props => (props.current ? "#e74c3c" : "transparent")}; */
+`;
+
+const Section = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const Video = styled.iframe`
+  width: 300px;
+  height: 200px;
+`;
+
+const DetailPresenter = ({ result, error, loading, location }) =>
   loading ? (
     <>
       <Helmet>
@@ -150,6 +189,26 @@ const DetailPresenter = ({ result, error, loading }) =>
             </Item>
           </ItemContainer>
           <Overview>{result.overview}</Overview>
+          <TabContainer>
+            <List>
+              <ListItem>
+                <Tab>YouTube</Tab>
+              </ListItem>
+              <ListItem>
+                <Tab>Production</Tab>
+              </ListItem>
+              <ListItem>
+                <Tab>Country</Tab>
+              </ListItem>
+            </List>
+            <Section>
+              <Video
+                src={`https://www.youtube.com/embed/${
+                  result.videos.results[0].key
+                }`}
+              />
+            </Section>
+          </TabContainer>
         </Data>
       </Content>
     </Container>
@@ -161,4 +220,11 @@ DetailPresenter.propTypes = {
   loading: PropTypes.bool.isRequired
 };
 
-export default DetailPresenter;
+export default withRouter(({ result, loading, error, location }) => (
+  <DetailPresenter
+    result={result}
+    loading={loading}
+    error={error}
+    location={location}
+  />
+));
