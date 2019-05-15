@@ -125,7 +125,14 @@ const Video = styled.iframe`
   height: 200px;
 `;
 
-const DetailPresenter = ({ result, error, loading, location }) =>
+const DetailPresenter = ({
+  result,
+  error,
+  loading,
+  location,
+  handleClick,
+  name
+}) =>
   loading ? (
     <>
       <Helmet>
@@ -194,16 +201,27 @@ const DetailPresenter = ({ result, error, loading, location }) =>
           <TabContainer>
             <List>
               <ListItem>
-                <Tab>YouTube</Tab>
+                <Tab name="youtube" onClick={handleClick}>
+                  YouTube
+                </Tab>
               </ListItem>
               <ListItem>
-                <Tab>Production</Tab>
+                <Tab name="production" onClick={handleClick}>
+                  Production
+                </Tab>
               </ListItem>
               <ListItem>
-                <Tab>Country</Tab>
+                <Tab name="country" onClick={handleClick}>
+                  Country
+                </Tab>
               </ListItem>
             </List>
-            <MorePresenter result={result} error={error} loading={loading} />
+            <MorePresenter
+              result={result}
+              error={error}
+              loading={loading}
+              name={name}
+            />
           </TabContainer>
         </Data>
       </Content>
@@ -211,16 +229,22 @@ const DetailPresenter = ({ result, error, loading, location }) =>
   );
 
 DetailPresenter.propTypes = {
+  handleClick: PropTypes.func,
   result: PropTypes.array,
   error: PropTypes.string,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired
 };
 
-export default withRouter(({ result, loading, error, location }) => (
-  <DetailPresenter
-    result={result}
-    loading={loading}
-    error={error}
-    location={location}
-  />
-));
+export default withRouter(
+  ({ result, loading, error, location, handleClick, name }) => (
+    <DetailPresenter
+      result={result}
+      loading={loading}
+      error={error}
+      location={location}
+      handleClick={handleClick}
+      name={name}
+    />
+  )
+);

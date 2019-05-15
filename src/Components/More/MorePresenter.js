@@ -37,23 +37,39 @@ const Video = styled.iframe`
   height: 200px;
 `;
 
-const MorePresenter = ({ loading, error, result }) =>
+const BigBox = styled.div`
+  width: 100px;
+  height: 200px;
+  background-color: white;
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+`;
+
+const MorePresenter = ({ loading, error, result, name }) =>
   loading ? (
     "loading"
   ) : error ? (
     <Message />
-  ) : (
+  ) : name == "youtube" ? (
     <Section>
       <Video
         src={`https://www.youtube.com/embed/${result.videos.results[0].key}`}
       />
+    </Section>
+  ) : (
+    <Section>
+      <BigBox />
+      <BigBox />
+      <BigBox />
     </Section>
   );
 // 아마도 render => componentDidMount 가 꼭 화면 리프래쉬가 아니야
 MorePresenter.propTypes = {
   result: PropTypes.array,
   error: PropTypes.string,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired
 };
 
 export default MorePresenter;

@@ -12,9 +12,18 @@ export default class extends React.Component {
       result: null,
       error: null,
       loading: true,
-      isMovie: pathname.includes("/movie/")
+      isMovie: pathname.includes("/movie/"),
+      name: "youtube"
     };
   }
+
+  handleClick = event => {
+    const {
+      target: { name }
+    } = event;
+    this.setState({ name: name });
+    console.log(name);
+  };
 
   async componentDidMount() {
     const {
@@ -45,7 +54,15 @@ export default class extends React.Component {
   }
 
   render() {
-    const { result, error, loading } = this.state;
-    return <DetailPresenter result={result} error={error} loading={loading} />;
+    const { result, error, loading, name } = this.state;
+    return (
+      <DetailPresenter
+        result={result}
+        error={error}
+        loading={loading}
+        handleClick={this.handleClick}
+        name={name}
+      />
+    );
   }
 }
