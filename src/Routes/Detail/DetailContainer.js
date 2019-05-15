@@ -36,6 +36,7 @@ export default class extends React.Component {
         ({ data: result } = await tvApi.tvDetail(parsedId));
       }
       console.log(result);
+      // click event를 받아서 뭐를 클릭하면 무슨 정보를 받아와서 나타내주는걸로 ?
     } catch {
       this.setState({ error: "Can't find anything" });
     } finally {

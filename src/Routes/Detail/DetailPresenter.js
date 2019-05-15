@@ -6,6 +6,7 @@ import { Link, withRouter } from "react-router-dom";
 
 import Loader from "Components/Loader";
 import Message from "Components/Message";
+import MorePresenter from "Components/More/MorePresenter";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -82,11 +83,6 @@ const Backdrop = styled.div`
   z-index: 0;
 `;
 
-const Tab = styled.button`
-  all: unset;
-  cursor: pointer;
-`;
-
 const TabContainer = styled.div`
   background-color: #020202;
   width: 50%;
@@ -97,25 +93,31 @@ const TabContainer = styled.div`
   padding: 20px;
 `;
 
+const Tab = styled.button`
+  all: unset;
+  cursor: pointer;
+`;
 const List = styled.ul`
   display: flex;
 `;
 
 const ListItem = styled.li`
-  font-size:14px;
+  font-size: 14px;
   width: 100px;
   height: 25px;
   text-align: center;
   border-bottom: 4px solid #e74c3c;
-  &:not(:last-child){
-    margin-right:30px;
+  &:not(:last-child) {
+    margin-right: 30px;
   }
-    /* ${props => (props.current ? "#e74c3c" : "transparent")}; */
 `;
 
 const Section = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Video = styled.iframe`
@@ -201,13 +203,7 @@ const DetailPresenter = ({ result, error, loading, location }) =>
                 <Tab>Country</Tab>
               </ListItem>
             </List>
-            <Section>
-              <Video
-                src={`https://www.youtube.com/embed/${
-                  result.videos.results[0].key
-                }`}
-              />
-            </Section>
+            <MorePresenter result={result} error={error} loading={loading} />
           </TabContainer>
         </Data>
       </Content>
