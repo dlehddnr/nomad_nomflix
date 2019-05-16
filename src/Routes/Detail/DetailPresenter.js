@@ -106,23 +106,12 @@ const ListItem = styled.li`
   width: 100px;
   height: 25px;
   text-align: center;
-  border-bottom: 4px solid #e74c3c;
+  border-bottom: 4px solid
+    ${props => (props.selected ? "#e74c3c" : "transparent")};
   &:not(:last-child) {
     margin-right: 30px;
   }
-`;
-
-const Section = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Video = styled.iframe`
-  width: 300px;
-  height: 200px;
+  transition: border-bottom 0.5s ease-in-out;
 `;
 
 const DetailPresenter = ({
@@ -200,17 +189,17 @@ const DetailPresenter = ({
           <Overview>{result.overview}</Overview>
           <TabContainer>
             <List>
-              <ListItem>
+              <ListItem selected={name === "youtube"}>
                 <Tab name="youtube" onClick={handleClick}>
                   YouTube
                 </Tab>
               </ListItem>
-              <ListItem>
+              <ListItem selected={name === "production"}>
                 <Tab name="production" onClick={handleClick}>
                   Production
                 </Tab>
               </ListItem>
-              <ListItem>
+              <ListItem selected={name === "country"}>
                 <Tab name="country" onClick={handleClick}>
                   Country
                 </Tab>
